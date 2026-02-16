@@ -70,7 +70,7 @@ type Modifications<InstanceName extends WidgetInstanceNames, Property extends Wi
 interface Icon extends IconEvents {
 	readonly name: string;
 	readonly isSelected: boolean;
-	readonly enabled: boolean;
+	readonly isEnabled: boolean;
 	readonly totalNotices: number;
 	readonly locked: boolean;
 
@@ -122,7 +122,10 @@ interface Icon extends IconEvents {
 	 * @chainable
 	 */
 	notify(clearNoticeEvent: RBXScriptSignal): this;
-	/** @chainable */
+	/**
+	 * Clears all notices from the icon.
+	 * @chainable
+	 */
 	clearNotices(): this;
 	/**
 	 * When set to true, disables the shade effect which appears when the icon is pressed and released.
@@ -136,11 +139,20 @@ interface Icon extends IconEvents {
 	 * @toggleable
 	 */
 	setImage(imageId: string, iconState?: IconState): this;
-	/** @chainable @toggleable */
+	/**
+	 * Sets the text label of the icon.
+	 * @chainable @toggleable
+	 */
 	setLabel(text: string, iconState?: IconState): this;
-	/** @chainable @toggleable */
+	/**
+	 * Sets the sort order of the icon.
+	 * @chainable @toggleable
+	 */
 	setOrder(order: number, iconState?: IconState): this;
-	/** @chainable @toggleable */
+	/**
+	 * Sets the corner radius of the icon.
+	 * @chainable @toggleable
+	 */
 	setCornerRadius(scale: number, offset: number, iconState?: IconState): this;
 	/**
 	 * This enables you to set the icon to the "Left" (default), "Center" or "Right" side of the screen.
@@ -169,6 +181,11 @@ interface Icon extends IconEvents {
 	 * @chainable @toggleable
 	 */
 	setTextSize(size: number, iconState?: IconState): this;
+	/**
+	 * The color of the icon labels' text.
+	 * @chainable @toggleable
+	 */
+	setTextColor(color: Color3, iconState?: IconState): this;
 	/**
 	 * Sets the labels FontFace.
 	 * Font can be a font family name (such as "Creepster"),
@@ -286,6 +303,12 @@ interface Icon extends IconEvents {
 	 */
 	setMenu(icons: Icon[]): this;
 	/**
+	 * Creates a menu that is always selected and has its close button hidden.
+	 * Pass an empty table {} to remove the menu. See [menus](https://1foreverhd.github.io/TopbarPlus/features/#menus) for more details.
+	 * @chainable
+	 */
+	setFixedMenu(icons: Icon[]): this;
+	/**
 	 * Joins the menu of parentIcon.
 	 * This is what icon:setMenu calls internally on the icons within its array.
 	 * @chainable
@@ -296,6 +319,12 @@ interface Icon extends IconEvents {
 	 * @chainable
 	 */
 	leave(): this;
+	/**
+	 * Accepts a [NumberSpinner](https://devforum.roblox.com/t/numberspinner-module/1105961) and converts the icon's label into that spinner.
+	 * Any changes to the NumberSpinner must be made within readyCallback otherwise you risk breaking the icon's appearance.
+	 * @chainable
+	 */
+	convertLabelToNumberSpinner(numberSpinner: object, readyCallback: Callback): this;
 	/**
 	 * Clears all connections and destroys all instances associated with the icon.
 	 * @chainable
@@ -318,6 +347,7 @@ interface IconConstructor {
 		modifications: Modifications<I, P>,
 	) => void;
 
+	/** Constructs an empty 32x32 icon on the topbar. */
 	new (): Icon;
 }
 
